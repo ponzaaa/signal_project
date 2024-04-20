@@ -60,6 +60,12 @@ java -jar target/target/cardio_generator-1.0-SNAPSHOT.jar --patient-count 100 --
 - `websocket:<port>`: Streams the simulated data to WebSocket clients connected to the specified port.
 - `tcp:<port>`: Streams the simulated data to TCP clients connected to the specified port.
 
+## UML Diagram
+
+A UML Class diagram is also included under the directory *uml_diagrams*. Here follows a brief explanation of the rationale behind it, as well as a short summary of the classes' uses and relationships.
+
+**HealthyDataGenerator** class contains the main method and takes and parses input from the user. It then calls each of the Generators' classes, which all implement the **PatientDataGenerator** interface. Each of those classes contain an output method, which calls/uses some class that implements the **OutputStrategy** interface, pre-decided from the input. Those classes then are responsible for the outputting of the randomly generated health data for the indicated number of patients.
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

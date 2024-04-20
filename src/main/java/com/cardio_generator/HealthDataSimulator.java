@@ -37,8 +37,6 @@ public class HealthDataSimulator {
     private static OutputStrategy outputStrategy = new ConsoleOutputStrategy(); // Default output strategy
     private static final Random random = new Random();
 
-
-
     /**
      * Main method to run the health data simulator. It processes command line arguments
      * to configure the simulation settings and initiates the data generation tasks.
