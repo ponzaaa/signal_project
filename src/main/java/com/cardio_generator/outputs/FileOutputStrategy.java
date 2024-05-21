@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class FileOutputStrategy implements OutputStrategy {
 
-    private String baseDirectory; /*Changed from BaseDirectory, such that it now follows Google Java convention,
+    private String baseDirectory = "/Users/giovanniponzini/Desktop/output"; /*Changed from BaseDirectory, such that it now follows Google Java convention,
                                     and everywhere it appeared */
 
     public final ConcurrentHashMap<String, String> file_map = new ConcurrentHashMap<>();
@@ -27,8 +27,7 @@ public class FileOutputStrategy implements OutputStrategy {
      *
      * @param baseDirectory The directory path where output files will be created and data will be written.
      */
-    public void fileOutputStrategy(String baseDirectory) {
-
+    public FileOutputStrategy(String baseDirectory) {
         this.baseDirectory = baseDirectory;
     }
 
