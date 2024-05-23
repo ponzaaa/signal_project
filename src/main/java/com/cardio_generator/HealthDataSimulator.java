@@ -4,8 +4,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.cardio_generator.generators.AlertGenerator;
-
 import com.cardio_generator.generators.BloodPressureDataGenerator;
 import com.cardio_generator.generators.BloodSaturationDataGenerator;
 import com.cardio_generator.generators.BloodLevelsDataGenerator;
@@ -170,14 +168,14 @@ public class HealthDataSimulator {
         BloodSaturationDataGenerator bloodSaturationDataGenerator = new BloodSaturationDataGenerator(patientCount);
         BloodPressureDataGenerator bloodPressureDataGenerator = new BloodPressureDataGenerator(patientCount);
         BloodLevelsDataGenerator bloodLevelsDataGenerator = new BloodLevelsDataGenerator(patientCount);
-        AlertGenerator alertGenerator = new AlertGenerator(patientCount);
+        // AlertGenerator alertGenerator = new AlertGenerator(patientCount);
 
         for (int patientId : patientIds) {
             scheduleTask(() -> ecgDataGenerator.generate(patientId, outputStrategy), 1, TimeUnit.SECONDS);
             scheduleTask(() -> bloodSaturationDataGenerator.generate(patientId, outputStrategy), 1, TimeUnit.SECONDS);
             scheduleTask(() -> bloodPressureDataGenerator.generate(patientId, outputStrategy), 1, TimeUnit.MINUTES);
             scheduleTask(() -> bloodLevelsDataGenerator.generate(patientId, outputStrategy), 2, TimeUnit.MINUTES);
-            scheduleTask(() -> alertGenerator.generate(patientId, outputStrategy), 20, TimeUnit.SECONDS);
+            // scheduleTask(() -> alertGenerator.generate(patientId, outputStrategy), 20, TimeUnit.SECONDS);
         }
     }
 
