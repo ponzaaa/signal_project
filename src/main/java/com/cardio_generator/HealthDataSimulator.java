@@ -50,6 +50,23 @@ public class HealthDataSimulator {
         Collections.shuffle(patientIds); // Randomize the order of patient IDs
 
         scheduleTasksForPatients(patientIds);
+
+        // Schedule termination after 20 seconds
+        scheduler.schedule(() -> {
+            System.out.println("Terminating data generation...");
+            scheduler.shutdown();
+            try {
+                if (!scheduler.awaitTermination(5, TimeUnit.SECONDS)) {
+                    System.err.println("Scheduler did not terminate in the specified time.");
+                    scheduler.shutdownNow();
+                }
+                System.out.println("Data generation terminated.");
+            } catch (InterruptedException e) {
+                System.err.println("Scheduler termination interrupted.");
+                scheduler.shutdownNow();
+                Thread.currentThread().interrupt();
+            }
+        }, 40, TimeUnit.SECONDS);
     }
 
 
@@ -175,7 +192,6 @@ public class HealthDataSimulator {
             scheduleTask(() -> bloodSaturationDataGenerator.generate(patientId, outputStrategy), 1, TimeUnit.SECONDS);
             scheduleTask(() -> bloodPressureDataGenerator.generate(patientId, outputStrategy), 1, TimeUnit.MINUTES);
             scheduleTask(() -> bloodLevelsDataGenerator.generate(patientId, outputStrategy), 2, TimeUnit.MINUTES);
-            // scheduleTask(() -> alertGenerator.generate(patientId, outputStrategy), 20, TimeUnit.SECONDS);
         }
     }
 
