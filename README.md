@@ -1,6 +1,6 @@
 # Cardio Data Simulator
 
-The Cardio Data Simulator is a Java-based application designed to simulate real-time cardiovascular data for multiple patients. This tool is particularly useful for educational purposes, enabling students to interact with real-time data streams of ECG, blood pressure, blood saturation, and other cardiovascular signals.
+The Cardio Data Simulator is a Java-based application designed to simulate real-time cardiovascular data for multiple patients. This tool is particularly useful for educational purposes, enabling students to interact with real-time data streams of ECG, blood pressure, blood saturation, and other cardiovascular signals. Student added part at the end.
 
 ## Features
 
@@ -60,7 +60,7 @@ java -jar target/cardio_generator-1.0-SNAPSHOT.jar --patient-count 100 --output 
 - `websocket:<port>`: Streams the simulated data to WebSocket clients connected to the specified port.
 - `tcp:<port>`: Streams the simulated data to TCP clients connected to the specified port.
 
-## UML Class Diagrams
+## UML Class Diagrams Task 2
 
 Some UML Class diagrams are also included under the directory *uml_diagrams*. Here follows a brief explanation of the rationale behind them,, as well as a short summary of the classes' uses and relationships.
 
@@ -82,7 +82,15 @@ I included a UML State Diagram that shows the life cycle of an alert event. The 
 
 What follows is an explanation of the sequence diagram showing the life cycle of an alert event: it starts with the **DataListener** that sends patient data to **AlertGenerator**. The AlertGenerator may cross-reference this input with past data held in **DataStorage** to determine if the current data is part of a worrying trend. If so, it updates the records and instructs the **AlertManager** to send an alert to the nursing staff, represented by the final object in the sequence, a Nurse.
 
+## UML Class Diagrams Task 4
 
+###Here's a code update before moving to the diagrams:
+
+After modifying the code substantially, I have generated files of data from which to read in a directory called /output, which can be modified by anyone who implements this code. Running the main method in HealthOutputGenerator with args[] --output file: /path/to/folder/output will generate the data as well. After data is generated, the now standard maven main class can be run in the Main.java class in the data_management module. The code now reads the outputs from the files, checks for data that may point to health issues, and triggers alerts, which are stored in a List<Alert> in the AlertGenerator class. The code is now almost all documented, will finish later and the tests are missing. 
+
+### Actual diagrams
+
+The code is now structured in 4 module, of which the only modifications regard the alerts module, where the **AlertGenerator** class has been developed, it uses static methods/tools that are simply for organization purpose stored in a static class called **Checkers**, which creates **Alert** objects containing the information about that precise alert. For the data_management module we have the Main class instantiating a **DataStorage** and a **DataFileReader** implementation of the **DataReader** interface. This reader parses the output data generated previously and stores it in the DataStorage object, which contains a HashMap which connects each **Patient** to  to its **PatientRecord** objects, one for each type of value that was generated (ECG, Saturation...).
 
 
 ## License
