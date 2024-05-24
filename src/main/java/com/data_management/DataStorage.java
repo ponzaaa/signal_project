@@ -1,9 +1,9 @@
 package com.data_management;
 
+import com.alerts.AlertGenerator;
+
 import java.io.IOException;
 import java.util.*;
-
-import com.alerts.AlertGenerator;
 
 /**
  * Manages storage and retrieval of patient data within a healthcare monitoring
@@ -55,7 +55,7 @@ public class DataStorage {
      * @param endTime   the end of the time range, in milliseconds since the Unix
      *                  epoch
      * @return a list of PatientRecord objects that fall within the specified time
-     *         range
+     * range
      */
     public List<PatientRecord> getRecords(int patientId, long startTime, long endTime) {
         Patient patient = patientMap.get(patientId);
@@ -78,7 +78,7 @@ public class DataStorage {
      * The main method for the DataStorage class.
      * Initializes the system, reads data into storage, and continuously monitors
      * and evaluates patient data.
-     * 
+     *
      * @param args command line arguments
      */
     public static void main(String[] args) throws IOException {
