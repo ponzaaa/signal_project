@@ -40,7 +40,7 @@ public class DataFileReader implements DataReader{
         String label = parts[2].split(": ")[1];
         String dataStr = parts[3].split(": ")[1];
 
-        // Remove percentage sign if present
+        // Remove percentage sign if presentL
         if (dataStr.endsWith("%")) {
             dataStr = dataStr.substring(0, dataStr.length() - 1);
         }
