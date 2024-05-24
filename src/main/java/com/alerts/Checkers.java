@@ -107,7 +107,7 @@ public class Checkers {
      * @param label the type of data we want the record for
      * @return the record for that label
      */
-    private static List<PatientRecord> filterRecordsByLabel(List<PatientRecord> records, String label) {
+    public static List<PatientRecord> filterRecordsByLabel(List<PatientRecord> records, String label) {
         return records.stream().filter(record -> record.getRecordType().equals(label)).toList();
     }
 
@@ -117,7 +117,7 @@ public class Checkers {
      * @return the timestamp of the record causing the trend alert if there is an increasing or decreasing trend,
      * null otherwise
      */
-    private static Long checkIncreasingOrDecreasingTrendTimestamp(List<PatientRecord> records) {
+    public static Long checkIncreasingOrDecreasingTrendTimestamp(List<PatientRecord> records) {
         if (records.size() < 3) return null;
         for (int i = 2; i < records.size(); i++) {
             double first = records.get(i - 2).getMeasurementValue();
@@ -138,7 +138,7 @@ public class Checkers {
      * @return the timestamp of the record exceeding the threshold if any,
      * null otherwise
      */
-    private static Long checkCriticalThresholdTimestamp(List<PatientRecord> records, double upper, double lower) {
+    public static Long checkCriticalThresholdTimestamp(List<PatientRecord> records, double upper, double lower) {
         return records.stream()
                 .filter(record -> record.getMeasurementValue() > upper || record.getMeasurementValue() < lower)
                 .map(PatientRecord::getTimestamp)
@@ -152,7 +152,7 @@ public class Checkers {
      * @return the timestamp of the record with low saturation if any,
      * null otherwise
      */
-    private static Long checkLowSaturationTimestamp(List<PatientRecord> records) {
+    public static Long checkLowSaturationTimestamp(List<PatientRecord> records) {
         return records.stream()
                 .filter(record -> record.getMeasurementValue() < 92)
                 .map(PatientRecord::getTimestamp)
@@ -166,7 +166,7 @@ public class Checkers {
      * @return the timestamp of the record causing the rapid drop if any,
      * null otherwise
      */
-    private static Long checkRapidDropTimestamp(List<PatientRecord> records) {
+    public static Long checkRapidDropTimestamp(List<PatientRecord> records) {
         if (records.size() < 2) return null;
         for (int i = 1; i < records.size(); i++) {
             double first = records.get(i - 1).getMeasurementValue();
@@ -186,7 +186,7 @@ public class Checkers {
      * @return the timestamp of the earlier record causing the alert if both conditions are met,
      * null otherwise
      */
-    private static Long checkHypotensiveHypoxemiaTimestamp(List<PatientRecord> systolicRecords, List<PatientRecord> saturationRecords) {
+    public static Long checkHypotensiveHypoxemiaTimestamp(List<PatientRecord> systolicRecords, List<PatientRecord> saturationRecords) {
         boolean lowSystolic = systolicRecords.stream().anyMatch(record -> record.getMeasurementValue() < 90);
         boolean lowSaturation = saturationRecords.stream().anyMatch(record -> record.getMeasurementValue() < 92);
         if (lowSystolic && lowSaturation) {
@@ -214,7 +214,7 @@ public class Checkers {
      * @return the timestamp of the record with concerning heart rate if any,
      * null otherwise
      */
-    private static Long checkAbnormalHeartRateTimestamp(List<PatientRecord> records) {
+    public static Long checkAbnormalHeartRateTimestamp(List<PatientRecord> records) {
         return records.stream()
                 .filter(record -> record.getMeasurementValue() < 50 || record.getMeasurementValue() > 100)
                 .map(PatientRecord::getTimestamp)
@@ -229,7 +229,7 @@ public class Checkers {
      * @param timestamp the timestamp of the data triggering the alert
      */
     private static void triggerAlert(int patientId, String alertMessage, long timestamp, List<Alert> alerts) {
-        System.out.println("Alert for Patient ID: " + patientId + " - " + alertMessage + " at " + timestamp);
+        // System.out.println("Alert for Patient ID: " + patientId + " - " + alertMessage + " at " + timestamp);
         Alert alert = new Alert(String.valueOf(patientId), alertMessage, timestamp);
         alerts.add(alert); // Add the alert to the list
     }

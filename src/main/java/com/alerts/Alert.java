@@ -23,4 +23,9 @@ public class Alert {
     public long getTimestamp() {
         return timestamp;
     }
+
+    @Override
+    public String toString() {
+        return "Alert for Patient ID: " + patientId + " - " + condition + " at " + timestamp;
+    }
 }
