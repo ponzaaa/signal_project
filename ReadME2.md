@@ -35,7 +35,7 @@ The **DataStorage** class operates as a database, with methods to get and set va
 
 The **Data Access System** is the class-structure used for handling incoming data via different protocols such as TCP, WebSocket, and file-based data streams. These data inputs are handled by respective listeners (TCPDataListener, WebSocketDataListener, FileDataListener) that all funnel into the **DataParser**. The parsed data is then stored through the **DataSourceAdapter**, which abstracts the data storage implementation.
 
-The **Patient Identification System ** revolves around the **PatientIdentifier**, which has a method to match patient IDs and retrieve their records. It's connected to **IdentityManager**, suggesting a system for handling discrepancies in patient identification. The **PatientRecord** is a data model that includes personal and medical details of a patient and can be updated and displayed as needed.
+The **Patient Identification System** revolves around the **PatientIdentifier**, which has a method to match patient IDs and retrieve their records. It's connected to **IdentityManager**, suggesting a system for handling discrepancies in patient identification. The **PatientRecord** is a data model that includes personal and medical details of a patient and can be updated and displayed as needed.
 
 The **Alert Generation System** is made up of the **AlertGenerator**, which scans the received real-time data and personal thresholds to detect anomalies. Upon finding an issue, it generates and dispatches alerts via an **AlertManager**, which then routes the information to the appropriate hospital section.
 
