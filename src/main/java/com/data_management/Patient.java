@@ -61,6 +61,10 @@ public class Patient {
         return filteredRecords;
     }
 
+    /**
+     * getter method for patient unique number identifier
+     * @return patient's ID number
+     */
     public int getId() {
         return patientId;
     }

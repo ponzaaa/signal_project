@@ -5,7 +5,6 @@ import com.data_management.Patient;
 import com.data_management.PatientRecord;
 import java.util.ArrayList;
 import java.util.List;
-
 import static com.alerts.Checkers.*;
 
 /**
