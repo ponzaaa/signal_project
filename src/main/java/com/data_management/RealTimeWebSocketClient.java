@@ -48,23 +48,37 @@ public class RealTimeWebSocketClient extends WebSocketClient implements DataRead
     }
 
     private void parseAndStore(String message) {
-        // Use the same parsing logic as DataFileReader
-        String[] parts = message.split(", ");
-        int patientId = Integer.parseInt(parts[0].split(": ")[1]);
-        long timestamp = Long.parseLong(parts[1].split(": ")[1]);
-        String label = parts[2].split(": ")[1];
-        String dataStr = parts[3].split(": ")[1];
+        try {
+            // Use the same parsing logic as DataFileReader
+            String[] parts = message.split(",");
+            if (parts.length < 4) {
+                throw new IllegalArgumentException("Invalid message format: " + message);
+            }
 
-        // Remove percentage sign if present
-        if (dataStr.endsWith("%")) {
-            dataStr = dataStr.substring(0, dataStr.length() - 1);
+            int patientId = Integer.parseInt(parts[0].trim());
+            long timestamp = Long.parseLong(parts[1].trim());
+            String label = parts[2].trim();
+            String dataStr = parts[3].trim();
+
+            // Remove percentage sign if present
+            if (dataStr.endsWith("%")) {
+                dataStr = dataStr.substring(0, dataStr.length() - 1);
+            }
+
+            double data = Double.parseDouble(dataStr);
+
+            // Add the data to the storage
+            dataStorage.addPatientData(patientId, data, label, timestamp);
+        } catch (Exception e) {
+            System.err.println("Error parsing message: " + message);
+            e.printStackTrace();
         }
-
-        double data = Double.parseDouble(dataStr);
-
-        // Add the data to the storage
-        dataStorage.addPatientData(patientId, data, label, timestamp);
     }
+
+    public void closeConnection() {
+        this.close();
+    }
+
 
     public static void main(String[] args) {
         try {

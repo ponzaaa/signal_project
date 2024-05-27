@@ -4,7 +4,10 @@ import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import static com.alerts.Checkers.*;
 
 /**
@@ -14,18 +17,14 @@ import static com.alerts.Checkers.*;
  * it against specific health criteria.
  */
 public class AlertGenerator {
-    private DataStorage dataStorage;
     private List<Alert> alerts;
 
     /**
      * Constructs an {@code AlertGenerator} with a specified {@code DataStorage}.
      * The {@code DataStorage} is used to retrieve patient data that this class
      * will monitor and evaluate.
-     *
-     * @param dataStorage the data storage system that provides access to patient data
      */
-    public AlertGenerator(DataStorage dataStorage) {
-        this.dataStorage = dataStorage;
+    public AlertGenerator() {
         this.alerts = new ArrayList<>();
     }
 
@@ -38,8 +37,8 @@ public class AlertGenerator {
      * @param startTime the starting time from which we want to retrieve and analyze data
      * @param endTime   the ending time before which we want to retrieve and analyze data
      */
-    public void evaluateData(Patient patient, long startTime, long endTime) {
-        List<PatientRecord> records = dataStorage.getRecords(patient.getId(), startTime, endTime);
+    public void evaluateData(Patient patient, long startTime, long endTime, Map<Integer, Patient> patientMap) {
+        List<PatientRecord> records = patientMap.get(patient.getId()).getRecords(startTime, endTime);
 
         // Check for Blood Pressure Data Alerts
         checkBloodPressureAlerts(patient, records, alerts);

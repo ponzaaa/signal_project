@@ -30,7 +30,7 @@ import java.util.ArrayList;
  */
 public class HealthDataSimulator {
 
-    private static int patientCount = 10; // Default number of patients
+    private static int patientCount = 100; // Default number of patients
     private static ScheduledExecutorService scheduler;
     private static OutputStrategy outputStrategy = new ConsoleOutputStrategy(); // Default output strategy
     private static final Random random = new Random();

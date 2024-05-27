@@ -13,6 +13,8 @@ import java.util.*;
  */
 public class DataStorage {
 
+    private AlertGenerator alertGenerator;
+
     private Map<Integer, Patient> patientMap; // Stores patient objects indexed by their unique patient ID.
 
     /**
@@ -21,12 +23,13 @@ public class DataStorage {
      */
     public DataStorage() {
         this.patientMap = new HashMap<>();
+        this.alertGenerator = new AlertGenerator();
     }
 
     /**
      * Adds or updates patient data in the storage.
      * If the patient does not exist, a new Patient object is created and added to
-     * the storage.
+     * the storage. Also runs an alert generator to check if there's something wrong.
      * Otherwise, the new data is added to the existing patient's records.
      *
      * @param patientId        the unique identifier of the patient
@@ -43,6 +46,7 @@ public class DataStorage {
             patientMap.put(patientId, patient);
         }
         patient.addRecord(measurementValue, recordType, timestamp);
+        alertGenerator.evaluateData(patient, timestamp-2, timestamp+1, patientMap);
     }
 
     /**
@@ -107,12 +111,15 @@ public class DataStorage {
         }
 
         // Initialize the AlertGenerator with the storage
-        AlertGenerator alertGenerator = new AlertGenerator(storage);
+//        AlertGenerator alertGenerator = new AlertGenerator();
 
         // Evaluate all patients' data to check for conditions that may trigger alerts
-        for (Patient patient : storage.getAllPatients()) {
-            alertGenerator.evaluateData(patient, 1700000000000L, 1800000000000L);
-        }
+//        for (Patient patient : storage.getAllPatients()) {
+//            alertGenerator.evaluateData(patient, 1700000000000L, 1800000000000L);
+//        }
     }
 
+    public AlertGenerator getAlertGenerator() {
+        return alertGenerator;
+    }
 }
