@@ -36,6 +36,7 @@ public class AlertGenerator {
      * @param patient   the patient data to evaluate for alert conditions
      * @param startTime the starting time from which we want to retrieve and analyze data
      * @param endTime   the ending time before which we want to retrieve and analyze data
+     * @param patientMap the HashMap containing patients and their records
      */
     public void evaluateData(Patient patient, long startTime, long endTime, Map<Integer, Patient> patientMap) {
         List<PatientRecord> records = patientMap.get(patient.getId()).getRecords(startTime, endTime);

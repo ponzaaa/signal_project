@@ -229,7 +229,7 @@ public class Checkers {
      * @param timestamp the timestamp of the data triggering the alert
      */
     private static void triggerAlert(int patientId, String alertMessage, long timestamp, List<Alert> alerts) {
-        // System.out.println("Alert for Patient ID: " + patientId + " - " + alertMessage + " at " + timestamp);
+        System.out.println("Alert for Patient ID: " + patientId + " - " + alertMessage + " at " + timestamp);
         Alert alert = new Alert(String.valueOf(patientId), alertMessage, timestamp);
         alerts.add(alert); // Add the alert to the list
     }

@@ -46,7 +46,7 @@ public class DataStorage {
             patientMap.put(patientId, patient);
         }
         patient.addRecord(measurementValue, recordType, timestamp);
-        alertGenerator.evaluateData(patient, timestamp-2, timestamp+1, patientMap);
+        alertGenerator.evaluateData(patient, timestamp, timestamp, patientMap);
     }
 
     /**
