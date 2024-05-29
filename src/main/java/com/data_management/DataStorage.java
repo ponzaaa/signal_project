@@ -2,9 +2,7 @@ package com.data_management;
 
 import com.alerts.*;
 import com.alerts.objects.Alert;
-import com.alerts.objects.SaturationAlert;
 import com.data_management.records.Patient;
-import com.data_management.records.PatientRecord;
 
 import java.util.*;
 
@@ -16,7 +14,7 @@ import java.util.*;
  */
 public class DataStorage {
 
-    Map<Integer, Alert> alerts;
+    Map<Integer, Alert> alerts = new HashMap<>();
     AlertStrategy alertStrategy;
     private final Map<Integer, Patient> patientMap; // Stores patient objects indexed by their unique patient ID.
 
@@ -65,17 +63,12 @@ public class DataStorage {
         }
     }
 
-    /**
-     * Retrieves a collection of all patients stored in the data storage.
-     *
-     * @return a list of all patients
-     */
-    public List<Patient> getAllPatients() {
-        return new ArrayList<>(patientMap.values());
-    }
-
     private void checkForAlert(AlertStrategy alertStrategy, int patientId, double data, long timestamp, Map<Integer,
             Patient> patientMap){
-        alertStrategy.checkAlert(patientId, data, timestamp, patientMap);
+        Alert alert = alertStrategy.checkAlert(patientId, data, timestamp, patientMap);
+        if (alert != null) {
+            alerts.put(alert.getAlertId(), alert);
+            System.out.println("Alert added to the list");
+        }
     }
 }

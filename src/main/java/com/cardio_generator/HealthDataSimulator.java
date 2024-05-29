@@ -30,7 +30,7 @@ import java.util.ArrayList;
  */
 public class HealthDataSimulator {
 
-    private static int patientCount = 100; // Default number of patients
+    private static int patientCount = 50; // Default number of patients
     private static ScheduledExecutorService scheduler;
     private static OutputStrategy outputStrategy = new ConsoleOutputStrategy(); // Default output strategy
     private static final Random random = new Random();
@@ -42,6 +42,7 @@ public class HealthDataSimulator {
      * @throws IOException If there is an issue with input/output operations, particularly related to file handling.
      */
     public static void main(String[] args) throws IOException {
+
         parseArguments(args);
 
         scheduler = Executors.newScheduledThreadPool(patientCount * 4);
@@ -50,23 +51,6 @@ public class HealthDataSimulator {
         Collections.shuffle(patientIds); // Randomize the order of patient IDs
 
         scheduleTasksForPatients(patientIds);
-
-        // Schedule termination after 20 seconds
-        scheduler.schedule(() -> {
-            System.out.println("Terminating data generation...");
-            scheduler.shutdown();
-            try {
-                if (!scheduler.awaitTermination(5, TimeUnit.SECONDS)) {
-                    System.err.println("Scheduler did not terminate in the specified time.");
-                    scheduler.shutdownNow();
-                }
-                System.out.println("Data generation terminated.");
-            } catch (InterruptedException e) {
-                System.err.println("Scheduler termination interrupted.");
-                scheduler.shutdownNow();
-                Thread.currentThread().interrupt();
-            }
-        }, 40, TimeUnit.SECONDS);
     }
 
 
@@ -185,7 +169,6 @@ public class HealthDataSimulator {
         BloodSaturationDataGenerator bloodSaturationDataGenerator = new BloodSaturationDataGenerator(patientCount);
         BloodPressureDataGenerator bloodPressureDataGenerator = new BloodPressureDataGenerator(patientCount);
         BloodLevelsDataGenerator bloodLevelsDataGenerator = new BloodLevelsDataGenerator(patientCount);
-        // AlertGenerator alertGenerator = new AlertGenerator(patientCount);
 
         for (int patientId : patientIds) {
             scheduleTask(() -> ecgDataGenerator.generate(patientId, outputStrategy), 1, TimeUnit.SECONDS);
