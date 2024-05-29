@@ -34,9 +34,9 @@ public class BloodLevelsDataGenerator implements PatientDataGenerator {
 
             // Output the generated values
             outputStrategy.output(patientId, System.currentTimeMillis(), "Cholesterol", Double.toString(cholesterol));
-            outputStrategy.output(patientId, System.currentTimeMillis(), "WhiteBloodCells",
+            outputStrategy.output(patientId, System.currentTimeMillis(), "White Blood Cells",
                     Double.toString(whiteCells));
-            outputStrategy.output(patientId, System.currentTimeMillis(), "RedBloodCells", Double.toString(redCells));
+            outputStrategy.output(patientId, System.currentTimeMillis(), "Red Blood Cells", Double.toString(redCells));
         } catch (Exception e) {
             System.err.println("An error occurred while generating blood levels data for patient " + patientId);
             e.printStackTrace(); // This will print the stack trace to help identify where the error occurred.

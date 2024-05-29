@@ -1,8 +1,9 @@
 package com.data_management;
 
 import com.alerts.AlertGenerator;
+import com.data_management.records.Patient;
+import com.data_management.records.PatientRecord;
 
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -13,9 +14,8 @@ import java.util.*;
  */
 public class DataStorage {
 
-    private AlertGenerator alertGenerator;
-
-    private Map<Integer, Patient> patientMap; // Stores patient objects indexed by their unique patient ID.
+    private final AlertGenerator alertGenerator;
+    private final Map<Integer, Patient> patientMap; // Stores patient objects indexed by their unique patient ID.
 
     /**
      * Constructs a new instance of DataStorage, initializing the underlying storage
@@ -46,7 +46,7 @@ public class DataStorage {
             patientMap.put(patientId, patient);
         }
         patient.addRecord(measurementValue, recordType, timestamp);
-        alertGenerator.evaluateData(patient, timestamp, timestamp, patientMap);
+        alertGenerator.evaluateRecord(patient, measurementValue, recordType, timestamp);
     }
 
     /**
@@ -63,11 +63,11 @@ public class DataStorage {
      * range
      */
     public List<PatientRecord> getRecords(int patientId, long startTime, long endTime) {
-        Patient patient = patientMap.get(patientId);
-        if (patient != null) {
-            return patient.getRecords(startTime, endTime);
-        }
-        return new ArrayList<>(); // return an empty list if no patient is found
+//        Patient patient = patientMap.get(patientId);
+//        if (patient != null) {
+//            return patient.getRecords(startTime, endTime);
+//        }
+//        return new ArrayList<>(); // return an empty list if no patient is found
     }
 
     /**
@@ -77,46 +77,6 @@ public class DataStorage {
      */
     public List<Patient> getAllPatients() {
         return new ArrayList<>(patientMap.values());
-    }
-
-    /**
-     * The main method for the DataStorage class.
-     * Initializes the system, reads data into storage, and continuously monitors
-     * and evaluates patient data.
-     *
-     * @param args command line arguments
-     */
-    public static void main(String[] args) throws IOException {
-        List<String> pathsToGeneratedData = Arrays.asList("/Users/giovanniponzini/Desktop/output/Cholesterol.txt",
-                "/Users/giovanniponzini/Desktop/output/DiastolicPressure.txt",
-                "/Users/giovanniponzini/Desktop/output/ECG.txt",
-                "/Users/giovanniponzini/Desktop/output/RedBloodCells.txt",
-                "/Users/giovanniponzini/Desktop/output/Saturation.txt",
-                "/Users/giovanniponzini/Desktop/output/SystolicPressure.txt",
-                "/Users/giovanniponzini/Desktop/output/WhiteBloodCells.txt");
-        DataStorage storage = new DataStorage();
-        DataReader reader = new DataFileReader(pathsToGeneratedData);
-
-        // Assuming the reader has been properly initialized and can read data into the
-        // storage
-        reader.readData(storage);
-
-        // Example of using DataStorage to retrieve and print records for a patient
-        List<PatientRecord> records = storage.getRecords(100, 1700000000000L, 1800000000000L);
-        for (PatientRecord record : records) {
-            System.out.println("Record for Patient ID: " + record.getPatientId() +
-                    ", Type: " + record.getRecordType() +
-                    ", Data: " + record.getMeasurementValue() +
-                    ", Timestamp: " + record.getTimestamp());
-        }
-
-        // Initialize the AlertGenerator with the storage
-//        AlertGenerator alertGenerator = new AlertGenerator();
-
-        // Evaluate all patients' data to check for conditions that may trigger alerts
-//        for (Patient patient : storage.getAllPatients()) {
-//            alertGenerator.evaluateData(patient, 1700000000000L, 1800000000000L);
-//        }
     }
 
     public AlertGenerator getAlertGenerator() {

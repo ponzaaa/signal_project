@@ -1,9 +1,8 @@
 package data_management;
 
-import com.alerts.Alert;
 import com.alerts.Checkers;
-import com.data_management.Patient;
-import com.data_management.PatientRecord;
+import com.data_management.records.Patient;
+import com.data_management.records.PatientRecord;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
