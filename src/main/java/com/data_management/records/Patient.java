@@ -31,7 +31,6 @@ public class Patient {
         patientRecords.put("White Blood Cells", new ArrayList<>());
     }
 
-
     public void addRecord(double data, String recordType, long timestamp) {
         switch (recordType){
             case "Cholesterol":
@@ -69,4 +68,15 @@ public class Patient {
     public int getId() {
         return patientId;
     }
+
+    public PatientRecord getRecordAtTime(String condition, long timestamp) {
+        ArrayList<PatientRecord> records = patientRecords.get(condition);
+        if (records != null) {
+            for (PatientRecord record : records) {
+                if (record.getTimestamp() == timestamp) {
+                    return record;
+                }
+            }
+        }
+        return null;    }
 }

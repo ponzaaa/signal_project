@@ -1,6 +1,6 @@
 package com.alerts.objects;
 
-abstract class Alert {
+public abstract class Alert {
 
     private int alertId;
     private int patientId;
