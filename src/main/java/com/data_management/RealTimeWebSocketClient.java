@@ -140,7 +140,7 @@ public class RealTimeWebSocketClient extends WebSocketClient implements DataRead
      */
     public static void main(String[] args) {
         try {
-            DataStorage dataStorage = new DataStorage();
+            DataStorage dataStorage = DataStorage.getDataStorage();
             URI uri = new URI("ws://localhost:8080");
             RealTimeWebSocketClient client = new RealTimeWebSocketClient(uri, dataStorage);
             client.connectToWebSocket("ws://localhost:8080");

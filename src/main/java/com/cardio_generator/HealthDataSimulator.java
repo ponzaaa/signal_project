@@ -30,29 +30,11 @@ import java.util.ArrayList;
  */
 public class HealthDataSimulator {
 
+    private static HealthDataSimulator healthDataSimulator;
     private static int patientCount = 50; // Default number of patients
     private static ScheduledExecutorService scheduler;
     private static OutputStrategy outputStrategy = new ConsoleOutputStrategy(); // Default output strategy
     private static final Random random = new Random();
-
-    /**
-     * Main method to run the health data simulator. It processes command line arguments
-     * to configure the simulation settings and initiates the data generation tasks.
-     *
-     * @throws IOException If there is an issue with input/output operations, particularly related to file handling.
-     */
-    public static void main(String[] args) throws IOException {
-
-        parseArguments(args);
-
-        scheduler = Executors.newScheduledThreadPool(patientCount * 4);
-
-        List<Integer> patientIds = initializePatientIds(patientCount);
-        Collections.shuffle(patientIds); // Randomize the order of patient IDs
-
-        scheduleTasksForPatients(patientIds);
-    }
-
 
     /**
      * Parses the command line arguments to set up the simulation configuration.
@@ -60,7 +42,7 @@ public class HealthDataSimulator {
      *
      * @throws IOException If there is an issue with setting up the file output directory.
      */
-    private static void parseArguments(String[] args) throws IOException {
+    private void parseArguments(String[] args) throws IOException {
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
                 case "-h":
@@ -188,5 +170,24 @@ public class HealthDataSimulator {
      */
     private static void scheduleTask(Runnable task, long period, TimeUnit timeUnit) {
         scheduler.scheduleAtFixedRate(task, random.nextInt(5), period, timeUnit);
+    }
+
+    private HealthDataSimulator(int patientCount, ScheduledExecutorService scheduler, OutputStrategy outputStrategy) {
+        this.patientCount = patientCount;
+        this.outputStrategy = outputStrategy;
+        this.scheduler = scheduler;
+    }
+
+    public static HealthDataSimulator getHealthDataSimulator(int patientCount, ScheduledExecutorService scheduler,
+                                                      OutputStrategy outputStrategy) {
+        if (healthDataSimulator == null) {
+            healthDataSimulator = new HealthDataSimulator(patientCount, scheduler, outputStrategy);
+            List<Integer> patientIds = initializePatientIds(patientCount);
+            Collections.shuffle(patientIds); // Randomize the order of patient IDs
+            scheduleTasksForPatients(patientIds);
+            return healthDataSimulator;
+        } else {
+            return healthDataSimulator;
+        }
     }
 }

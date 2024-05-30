@@ -13,16 +13,15 @@ import java.util.*;
  * patient IDs.
  */
 public class DataStorage {
-
-    Map<Integer, Alert> alerts = new HashMap<>();
-    AlertStrategy alertStrategy;
+    private static DataStorage dataStorage;
+    private static Map<Integer, Alert> alerts = new HashMap<>();
     private final Map<Integer, Patient> patientMap; // Stores patient objects indexed by their unique patient ID.
 
     /**
      * Constructs a new instance of DataStorage, initializing the underlying storage
      * structure.
      */
-    public DataStorage() {
+    private DataStorage() {
         this.patientMap = new HashMap<>();
     }
 
@@ -50,16 +49,16 @@ public class DataStorage {
         // check for alert
         switch (recordType) {
             case "Saturation":
-                checkForAlert(alertStrategy = new BloodSaturationStrategy(), patientId, data, timestamp, patientMap);
+                checkForAlert(new BloodSaturationStrategy(), patientId, data, timestamp, patientMap);
                 break;
             case "ECG":
-                checkForAlert(alertStrategy = new HeartRateStrategy(), patientId, data, timestamp, patientMap);
+                checkForAlert(new HeartRateStrategy(), patientId, data, timestamp, patientMap);
                 break;
             case "Diastolic Pressure":
-                checkForAlert(alertStrategy = new DiastolicPressureStrategy(), patientId, data, timestamp, patientMap);
+                checkForAlert(new DiastolicPressureStrategy(), patientId, data, timestamp, patientMap);
                 break;
             case "Systolic Pressure":
-                checkForAlert(alertStrategy = new SystolicPressureStrategy(), patientId, data, timestamp, patientMap);
+                checkForAlert(new SystolicPressureStrategy(), patientId, data, timestamp, patientMap);
         }
     }
 
@@ -69,6 +68,15 @@ public class DataStorage {
         if (alert != null) {
             alerts.put(alert.getAlertId(), alert);
             System.out.println("Alert added to the list");
+        }
+    }
+
+    public static DataStorage getDataStorage() {
+        if (dataStorage == null) {
+            dataStorage = new DataStorage();
+            return dataStorage;
+        } else {
+            return dataStorage;
         }
     }
 }
