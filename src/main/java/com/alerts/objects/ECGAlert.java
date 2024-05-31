@@ -1,9 +1,37 @@
 package com.alerts.objects;
 
-public class ECGAlert extends Alert {
+public class ECGAlert implements Alert {
+
+    private final int alertId;
+    private final int patientId;
+    private final String condition;
+    private final long timestamp;
 
     public ECGAlert(int alertId, int patientId, String condition, long timestamp) {
-        super(alertId, patientId, condition, timestamp);
+        this.alertId = alertId;
+        this.patientId = patientId;
+        this.condition = condition;
+        this.timestamp = timestamp;
+    }
+
+    @Override
+    public int getAlertId() {
+        return alertId;
+    }
+
+    @Override
+    public int getPatientId() {
+        return patientId;
+    }
+
+    @Override
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    @Override
+    public String getCondition() {
+        return condition;
     }
 
 }
