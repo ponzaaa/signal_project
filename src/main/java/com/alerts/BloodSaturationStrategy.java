@@ -1,7 +1,6 @@
 package com.alerts;
 
-import com.alerts.creators.HypotensiveHypoxemiaAlertCreator;
-import com.alerts.creators.SaturationAlertCreator;
+import com.alerts.creators.AlertFactory;
 import com.alerts.objects.Alert;
 import com.data_management.records.Patient;
 
@@ -11,8 +10,7 @@ public class BloodSaturationStrategy implements AlertStrategy {
     @Override
     public Alert checkAlert(int patientId, double data, long timestamp, Map<Integer, Patient> patientMap) {
         Alert alert = null;
-        SaturationAlertCreator alertCreator = new SaturationAlertCreator();
-        HypotensiveHypoxemiaAlertCreator alertCreator2 = new HypotensiveHypoxemiaAlertCreator();
+        AlertFactory alertCreator = new AlertFactory();
         // check low values
         if (data<92){
             alert = alertCreator.creatAlert(patientId, "Blood Saturation below 92%",timestamp);
@@ -20,7 +18,7 @@ public class BloodSaturationStrategy implements AlertStrategy {
             try {
                 if (patientMap.get(patientId).getRecordAtTime("Systolic Pressure", timestamp)
                         .getMeasurementValue() < 90) {
-                    alert = alertCreator2.creatAlert(patientId, "Blood Saturation below 92% and Systolic " +
+                    alert = alertCreator.creatAlert(patientId, "Blood Saturation below 92% and Systolic " +
                             "Pressure under 90 mmHg", timestamp);
                 }
             } catch (Exception ignored) {
