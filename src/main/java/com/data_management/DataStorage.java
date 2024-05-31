@@ -14,7 +14,7 @@ import java.util.*;
  */
 public class DataStorage {
     private static DataStorage dataStorage;
-    private static Map<Integer, Alert> alerts = new HashMap<>();
+    private final Map<Integer, Alert> alerts = new HashMap<>();
     private final Map<Integer, Patient> patientMap; // Stores patient objects indexed by their unique patient ID.
 
     /**
@@ -74,9 +74,16 @@ public class DataStorage {
     public static DataStorage getDataStorage() {
         if (dataStorage == null) {
             dataStorage = new DataStorage();
-            return dataStorage;
-        } else {
-            return dataStorage;
         }
+        return dataStorage;
+    }
+
+    public Map<Integer, Alert> getAlerts() {
+        return alerts;
+    }
+
+    public void resolveAlert(int alertId) {
+        alerts.remove(alertId);
+        System.out.println("Alert " + alertId + " resolved from the list");
     }
 }

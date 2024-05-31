@@ -1,6 +1,5 @@
 package com.cardio_generator;
 
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -14,7 +13,6 @@ import com.cardio_generator.outputs.OutputStrategy;
 import com.cardio_generator.outputs.TcpOutputStrategy;
 import com.cardio_generator.outputs.WebSocketOutputStrategy;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.io.IOException;
@@ -31,10 +29,16 @@ import java.util.ArrayList;
 public class HealthDataSimulator {
 
     private static HealthDataSimulator healthDataSimulator;
-    private static int patientCount = 50; // Default number of patients
-    private static ScheduledExecutorService scheduler;
-    private static OutputStrategy outputStrategy = new ConsoleOutputStrategy(); // Default output strategy
-    private static final Random random = new Random();
+    private int patientCount;
+    private final ScheduledExecutorService scheduler;
+    private OutputStrategy outputStrategy;
+    private final Random random = new Random();
+
+    private HealthDataSimulator(int patientCount, ScheduledExecutorService scheduler, OutputStrategy outputStrategy) {
+        this.patientCount = patientCount;
+        this.outputStrategy = outputStrategy;
+        this.scheduler = scheduler;
+    }
 
     /**
      * Parses the command line arguments to set up the simulation configuration.
@@ -42,7 +46,7 @@ public class HealthDataSimulator {
      *
      * @throws IOException If there is an issue with setting up the file output directory.
      */
-    private void parseArguments(String[] args) throws IOException {
+    public void parseArguments(String[] args) throws IOException {
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
                 case "-h":
@@ -107,7 +111,7 @@ public class HealthDataSimulator {
      * Prints help information to the console. This includes usage instructions and a description
      * of all available command line options.
      */
-    private static void printHelp() {
+    private void printHelp() {
         System.out.println("Usage: java HealthDataSimulator [options]");
         System.out.println("Options:");
         System.out.println("  -h                       Show help and exit.");
@@ -131,7 +135,7 @@ public class HealthDataSimulator {
  * @param patientCount The number of patients for which to generate IDs.
  * @return A list of integers representing patient IDs.
  */
-    private static List<Integer> initializePatientIds(int patientCount) {
+    public List<Integer> initializePatientIds(int patientCount) {
         List<Integer> patientIds = new ArrayList<>();
         for (int i = 1; i <= patientCount; i++) {
             patientIds.add(i);
@@ -146,7 +150,7 @@ public class HealthDataSimulator {
      *
      * @param patientIds List of patient IDs for which to schedule data generation tasks.
      */
-    private static void scheduleTasksForPatients(List<Integer> patientIds) {
+    public void scheduleTasksForPatients(List<Integer> patientIds) {
         ECGDataGenerator ecgDataGenerator = new ECGDataGenerator(patientCount);
         BloodSaturationDataGenerator bloodSaturationDataGenerator = new BloodSaturationDataGenerator(patientCount);
         BloodPressureDataGenerator bloodPressureDataGenerator = new BloodPressureDataGenerator(patientCount);
@@ -168,26 +172,15 @@ public class HealthDataSimulator {
      * @param period The period between successive executions of the task.
      * @param timeUnit The time unit of the period and initial delay (e.g., SECONDS, MINUTES).
      */
-    private static void scheduleTask(Runnable task, long period, TimeUnit timeUnit) {
+    private void scheduleTask(Runnable task, long period, TimeUnit timeUnit) {
         scheduler.scheduleAtFixedRate(task, random.nextInt(5), period, timeUnit);
     }
 
-    private HealthDataSimulator(int patientCount, ScheduledExecutorService scheduler, OutputStrategy outputStrategy) {
-        this.patientCount = patientCount;
-        this.outputStrategy = outputStrategy;
-        this.scheduler = scheduler;
-    }
-
     public static HealthDataSimulator getHealthDataSimulator(int patientCount, ScheduledExecutorService scheduler,
-                                                      OutputStrategy outputStrategy) {
+                                                             OutputStrategy outputStrategy) {
         if (healthDataSimulator == null) {
             healthDataSimulator = new HealthDataSimulator(patientCount, scheduler, outputStrategy);
-            List<Integer> patientIds = initializePatientIds(patientCount);
-            Collections.shuffle(patientIds); // Randomize the order of patient IDs
-            scheduleTasksForPatients(patientIds);
-            return healthDataSimulator;
-        } else {
-            return healthDataSimulator;
         }
+        return healthDataSimulator;
     }
 }
