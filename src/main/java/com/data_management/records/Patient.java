@@ -79,4 +79,8 @@ public class Patient {
             }
         }
         return null;    }
+
+    public ArrayList<PatientRecord> getRecord(String condition) {
+        return patientRecords.get(condition);
+    }
 }

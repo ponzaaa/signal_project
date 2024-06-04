@@ -82,8 +82,20 @@ public class DataStorage {
         return alerts;
     }
 
+    public Map<Integer, Patient> getPatientMap() {
+        return patientMap;
+    }
+
+    public Patient getPatient(int patientId) {
+        return patientMap.get(patientId);
+    }
+
     public void resolveAlert(int alertId) {
         alerts.remove(alertId);
         System.out.println("Alert " + alertId + " resolved from the list");
+    }
+
+    public static void resetInstance(){
+        dataStorage=null;
     }
 }

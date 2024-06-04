@@ -133,6 +133,10 @@ public class RealTimeWebSocketClient extends WebSocketClient implements DataRead
         this.close();
     }
 
+    public DataStorage getDataStorage() {
+        return dataStorage;
+    }
+
     /**
      * Main method to demonstrate the use of RealTimeWebSocketClient.
      *

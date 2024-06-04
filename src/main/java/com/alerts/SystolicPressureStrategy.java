@@ -17,6 +17,7 @@ public class SystolicPressureStrategy extends BloodPressureStrategy {
         } else if (data<90) {
             // check for hypotensive hypoxemia
             if (patientMap.get(patientId).getRecordAtTime("Saturation", timestamp)
+                    .getMeasurementValue()!=0&&patientMap.get(patientId).getRecordAtTime("Saturation", timestamp)
                     .getMeasurementValue()<92){
                 alert = alertCreator.creatAlert(patientId, "Blood Saturation below 92% and Systolic " +
                         "Pressure under 90 mmHg",timestamp);
