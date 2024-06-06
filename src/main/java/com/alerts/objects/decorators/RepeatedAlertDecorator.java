@@ -12,11 +12,19 @@ public class RepeatedAlertDecorator extends AlertDecorator {
         this.timeToCheck=timeToCheck;
     }
 
+    public RepeatedAlertDecorator(Alert wrapped) {
+        super(wrapped);
+    }
+
     public void setTimeToCheck(int timeToCheck) {
         this.timeToCheck=timeToCheck;
     }
 
     public int getTimeToCheck() {
         return timeToCheck;
+    }
+
+    public Alert getWrapped() {
+        return this.wrapped;
     }
 }

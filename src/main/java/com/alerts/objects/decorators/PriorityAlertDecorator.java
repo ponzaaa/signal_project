@@ -11,6 +11,10 @@ public class PriorityAlertDecorator extends AlertDecorator {
         this.priority=priority;
     }
 
+    public PriorityAlertDecorator(Alert wrapped) {
+        super(wrapped);
+    }
+
     public void setPriority(int priority) {
         assert priority >= 0 && priority <= 3;
         this.priority = priority;
@@ -19,4 +23,9 @@ public class PriorityAlertDecorator extends AlertDecorator {
     public int getPriority() {
         return this.priority;
     }
+
+    public Alert getWrappedAlert() {
+        return this.wrappedAlert;
+    }
+
 }

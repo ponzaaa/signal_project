@@ -2,9 +2,10 @@ package data_management;
 
 import com.alerts.creators.AlertFactory;
 import com.alerts.objects.*;
-import com.alerts.objects.decorators.AlertSorter;
-import com.alerts.objects.decorators.PriorityAlertDecorator;
+import com.alerts.objects.decorators.AlertDecorator;
 import com.alerts.objects.decorators.PriorityAlertSorter;
+import com.alerts.objects.decorators.PriorityAlertDecorator;
+import com.alerts.objects.decorators.RepeatedAlertDecorator;
 import com.cardio_generator.HealthDataSimulator;
 import com.cardio_generator.outputs.ConsoleOutputStrategy;
 import com.cardio_generator.outputs.OutputStrategy;
@@ -232,6 +233,15 @@ public class UnitTests {
         assertEquals(a2, listAlerts.get(1));
         assertEquals(a1, listAlerts.get(2));
         assertEquals(a3, listAlerts.get(3));
+    }
+
+    @Test
+    public void testAlertDecorators(){
+        // Testing
+        Alert testAlert = new ECGAlert(0,0,"", 0);
+        PriorityAlertDecorator priorityAlert = new PriorityAlertDecorator(testAlert);
+        RepeatedAlertDecorator repeatedPriorityAlert = new RepeatedAlertDecorator(priorityAlert);
+        System.out.println(repeatedPriorityAlert.getWrapped());
     }
 
 }

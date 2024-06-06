@@ -3,9 +3,9 @@ package com.alerts.objects.decorators;
 import com.alerts.objects.Alert;
 
 public class AlertDecorator implements Alert {
-    Alert wrapped;
+    private Alert wrapped;
 
-    AlertDecorator(Alert wrapped) {
+    public AlertDecorator(Alert wrapped) {
         this.wrapped = wrapped;
     }
 
@@ -27,5 +27,9 @@ public class AlertDecorator implements Alert {
     @Override
     public String getCondition() {
         return wrapped.getCondition();
+    }
+
+    public Alert getWrapped() {
+        return wrapped;
     }
 }

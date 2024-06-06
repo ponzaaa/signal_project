@@ -1,5 +1,11 @@
 package com.data_management;
 
+import com.alerts.creators.AlertFactory;
+import com.alerts.objects.Alert;
+import com.alerts.objects.ECGAlert;
+import com.alerts.objects.decorators.AlertDecorator;
+import com.alerts.objects.decorators.PriorityAlertDecorator;
+import com.alerts.objects.decorators.RepeatedAlertDecorator;
 import com.cardio_generator.HealthDataSimulator;
 import com.cardio_generator.outputs.OutputStrategy;
 import com.cardio_generator.outputs.WebSocketOutputStrategy;
