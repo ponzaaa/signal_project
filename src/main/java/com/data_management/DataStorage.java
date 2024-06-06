@@ -62,6 +62,16 @@ public class DataStorage {
         }
     }
 
+    /**
+     * Method representing the core of the alert creation system: it receives the strategy and applies it
+     * to the given patient's record, checks for the right condition and creates an alert through
+     * the {@link AlertStrategy} which uses the {@link com.alerts.creators.AlertFactory}
+     * @param alertStrategy the given strategy depending on the condition
+     * @param patientId unique identifier for the patient
+     * @param data value stored as a double of the condition's recorded data
+     * @param timestamp time component of the recorded data
+     * @param patientMap the HashMap of all patients in the hospital and their records
+     */
     private void checkForAlert(AlertStrategy alertStrategy, int patientId, double data, long timestamp, Map<Integer,
             Patient> patientMap){
         Alert alert = alertStrategy.checkAlert(patientId, data, timestamp, patientMap);

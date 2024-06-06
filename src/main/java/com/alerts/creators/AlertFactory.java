@@ -2,7 +2,19 @@ package com.alerts.creators;
 
 import com.alerts.objects.Alert;
 
+/**
+ * Factory Design Pattern implementation for creating different types of alerts
+ */
 public class AlertFactory {
+
+    /**
+     * Method for creating different alert objects depending on the characteristic of the alert
+     * @param patientID unique identifier of the patient
+     * @param condition problem that the alert wants to signal
+     * @param timestamp time of the recorded dangerous value
+     * @throws IllegalArgumentException in case the condition is not a recognized one
+     * @return specific alert object depending on the alert's condition
+     */
     public Alert creatAlert(int patientID, String condition, long timestamp){
 
         // Blood Pressure (Diastolic)

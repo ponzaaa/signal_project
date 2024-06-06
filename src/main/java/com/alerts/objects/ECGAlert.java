@@ -1,5 +1,8 @@
 package com.alerts.objects;
 
+/**
+ * Particular type of {@link Alert} representing a problem regarding ECG heart rate data
+ */
 public class ECGAlert implements Alert {
 
     private final int alertId;

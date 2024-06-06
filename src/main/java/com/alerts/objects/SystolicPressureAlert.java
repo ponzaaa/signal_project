@@ -1,5 +1,8 @@
 package com.alerts.objects;
 
+/**
+ * Particular type of {@link Alert} representing a problem regarding Systolic Pressure
+ */
 public class SystolicPressureAlert implements Alert {
 
     private final int alertId;

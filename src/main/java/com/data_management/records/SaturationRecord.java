@@ -1,10 +1,13 @@
 package com.data_management.records;
 
+/**
+ * Represents a single unit of the record for Blood Saturation data
+ */
 public class SaturationRecord implements PatientRecord {
 
-    private int patientID;
-    private double data;
-    private long timestamp;
+    private final int patientID;
+    private final double data;
+    private final long timestamp;
 
     public SaturationRecord(int patientID, double data, long timestamp) {
         this.patientID = patientID;

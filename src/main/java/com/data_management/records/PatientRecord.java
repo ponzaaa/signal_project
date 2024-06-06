@@ -3,10 +3,8 @@ package com.data_management.records;
 /**
  * Represents a single record of patient data at a specific point in time.
  * This class stores all necessary details for a single observation or
- * measurement
- * taken from a patient, including the type of record (such as ECG, blood
- * pressure),
- * the measurement value, and the exact timestamp when the measurement was
+ * measurement taken from a patient, including the type of record (such as ECG, blood
+ * pressure), the measurement value, and the exact timestamp when the measurement was
  * taken.
  */
 public interface PatientRecord {

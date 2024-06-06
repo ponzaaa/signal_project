@@ -28,10 +28,10 @@ public class RealTimeWebSocketClient extends WebSocketClient implements DataRead
     /**
      * Called when the connection to the WebSocket server is opened.
      *
-     * @param handshakedata  the handshake data from the server
+     * @param handshake  the handshake data from the server
      */
     @Override
-    public void onOpen(ServerHandshake handshakedata) {
+    public void onOpen(ServerHandshake handshake) {
         System.out.println("Connected to WebSocket server");
     }
 

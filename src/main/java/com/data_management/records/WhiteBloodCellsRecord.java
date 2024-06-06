@@ -1,10 +1,13 @@
 package com.data_management.records;
 
+/**
+ * Represents a single unit of the record for White Blood Cells data
+ */
 public class WhiteBloodCellsRecord implements PatientRecord {
 
-    private int patientID;
-    private double data;
-    private long timestamp;
+    private final int patientID;
+    private final double data;
+    private final long timestamp;
 
     public WhiteBloodCellsRecord(int patientID, double data, long timestamp) {
         this.patientID = patientID;

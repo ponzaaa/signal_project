@@ -1,5 +1,9 @@
 package com.alerts.objects;
 
+/**
+ * Particular type of {@link Alert} representing a problem regarding Saturation level in
+ * the blood stream
+ */
 public class SaturationAlert implements Alert {
 
     private final int alertId;

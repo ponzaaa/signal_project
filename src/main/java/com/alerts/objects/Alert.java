@@ -1,7 +1,8 @@
 package com.alerts.objects;
 
-import java.util.Collection;
-
+/**
+ * Interface representing an Alert object and its getters
+ */
 public interface Alert {
 
     int getAlertId();

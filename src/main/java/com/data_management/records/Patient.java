@@ -5,8 +5,7 @@ import java.util.*;
 /**
  * Represents a patient and manages their medical records.
  * This class stores patient-specific data, allowing for the addition and
- * retrieval
- * of medical records based on specified criteria.
+ * retrieval of medical records based on specified criteria.
  */
 public class Patient {
     private int patientId;
@@ -31,6 +30,12 @@ public class Patient {
         patientRecords.put("White Blood Cells", new ArrayList<>());
     }
 
+    /**
+     * Adds a record to the list of timestamped records
+     * @param data the value of the condition that got recorded as a double
+     * @param recordType the type of record whose value is stored
+     * @param timestamp time component at which the value was recorded
+     */
     public void addRecord(double data, String recordType, long timestamp) {
         switch (recordType){
             case "Cholesterol":
@@ -57,6 +62,11 @@ public class Patient {
         }
     }
 
+    /**
+     * Getter method for the list of records of the {@link Patient}
+     * @return HashMap that, given the condition/record type, returns
+     * the list of timestamped values that had been recorded and stored
+     */
     public Map<String, ArrayList<PatientRecord>> getPatientRecords() {
         return patientRecords;
     }
@@ -69,6 +79,12 @@ public class Patient {
         return patientId;
     }
 
+    /**
+     * Specific getter method that return a certain record filtered by its timestamp
+     * @param condition condition for which we want to find the record
+     * @param timestamp time component at which the value was recorded
+     * @return the {@link PatientRecord} for that timestamp
+     */
     public PatientRecord getRecordAtTime(String condition, long timestamp) {
         ArrayList<PatientRecord> records = patientRecords.get(condition);
         if (records != null) {
@@ -78,7 +94,8 @@ public class Patient {
                 }
             }
         }
-        return null;    }
+        return null;
+    }
 
     public ArrayList<PatientRecord> getRecord(String condition) {
         return patientRecords.get(condition);
